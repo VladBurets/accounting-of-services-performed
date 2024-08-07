@@ -1,0 +1,195 @@
+﻿<Window x:Class="BdKursach.ClientsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BdKursach"
+        mc:Ignorable="d"      
+        Title="Заказчики"  Height="800" Width="1600" WindowState="Maximized">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="/Images/glavn.jpg" Stretch="UniformToFill" Margin="10,0,0,0" Grid.RowSpan="2"  >
+            <Image.Effect>
+                <BlurEffect Radius="5"></BlurEffect>
+            </Image.Effect>
+        </Image>
+
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="Таблицы" FontSize="15">
+                <MenuItem Header="Заказчики" Click="ClientsMenuItem_Click" FontSize="15"/>
+                <MenuItem Header="Сотрудники" Click="EmployeesMenuItem_Click" FontSize="15"/>
+                <MenuItem Header="Услуги" Click="ServicesMenuItem_Click" FontSize="15"/>
+                <MenuItem Header="Заказы" Click="OrdersMenuItem_Click" FontSize="15"/>
+            </MenuItem>
+            <MenuItem Header="Статистика" FontSize="15">
+                <MenuItem Header="Статистика за все время" Click="ServiceStatisticsMenuItem_Click" FontSize="15"/>
+                <MenuItem Header="Статистика за период времени" Click="PeriodSelectionMenuItem_Click" FontSize="15"/>
+            </MenuItem>
+        </Menu>
+        <TextBlock Grid.Row="1" Text="Заказчики" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" FontSize="30"  FontWeight="Bold" Foreground="White"/>
+
+
+        <Grid x:Name="ElementsGrid" Background="#0d0d0d" Grid.Row="1" Opacity="0.9" Margin="120,78,137,0"  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="38"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+
+            <DataGrid x:Name="ClientsDataGrid" Margin="255,80,98,112" Background="#77FFFFFF" BorderBrush="Black" FontSize="13" Grid.Row="5" CanUserAddRows="False"  HorizontalScrollBarVisibility="Disabled" >
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseLeftButtonUp" Handler="ClientsDataGridRow_MouseLeftButtonUp"/>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Организация" Binding="{Binding Название}" Width="120">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Контактное лицо" Binding="{Binding Контактное_лицо}" Width="150">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Телефон" Binding="{Binding Телефон}" Width="120"/>
+                    <DataGridTextColumn Header="Электронная почта" Binding="{Binding Электронная_почта}" Width="150">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Адрес" Binding="{Binding Адрес}" Width="150">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Расчетный счет" Binding="{Binding Расчетный_счет}" Width="110">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Банк" Binding="{Binding Банк}" Width="120">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+            <Button Content="Добавить"  HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="52,130,0,0" Grid.Row="5"  Height="32" Width="177" Click="AddClientsMenuItem_Click" RenderTransformOrigin="0.417,0.457" Background="Red" Foreground="White" FontSize="15" />
+            <Button Content="Редактировать"  HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="52,191,0,0" Grid.Row="5" Height="32" Width="177" Click="EditClientsMenuItem_Click" Background="Red" Foreground="White" FontSize="15"/>
+
+
+            <Button Content="Поиск" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="255,30,0,0" Height="32" Width="137" Grid.Row="5" Click="SearchButton_Click" FontSize="15" RenderTransformOrigin="0.893,0.502" Background="Red" Foreground="White"/>
+            <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" Margin="392,30,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="643" FontSize="15" Height="32" RenderTransformOrigin="-6.787,14.415" />
+            <Button Content="Очистить поиск" HorizontalAlignment="Left" Margin="1035,30,0,0" Grid.Row="5" Height="32" Width="137" VerticalAlignment="Top" Background="Red" Click="ClearButton_Click" Foreground="White" FontSize="15" RenderTransformOrigin="-6.787,14.415"/>
+            <Button Content="История заказов" HorizontalAlignment="Left" Margin="52,0,0,0" Grid.Row="5" VerticalAlignment="Center" Click="HistoryOrdersButton_Click"  Height="32" Width="177" Background="Red" Foreground="White" FontSize="15" RenderTransformOrigin="0.479,1.578"/>
+            <Button Content="Добавить/Удалить банк" HorizontalAlignment="Left" Margin="52,252,0,0" Grid.Row="5" VerticalAlignment="Top" RenderTransformOrigin="-0.389,-6.313" Foreground="White"  Height="32" Width="177" Background="Red" FontSize="15" Click="BankButton_Click"/>
+        </Grid>
+
+        <Grid x:Name="inputGrid" Grid.Row="1"  Margin="239,128,239,0"  Opacity="0.9" Background="#0d0d0d" Visibility="Collapsed">
+
+            <Button Content="Назад" HorizontalAlignment="Right" VerticalAlignment="Top" Height="61" Width="155" Margin="0,28,48,0" Background="Red" Foreground="White" FontSize="20" Click="BackButton_Click" RenderTransformOrigin="0.573,1.011"/>
+            <TextBlock HorizontalAlignment="Left" Margin="642,89,0,0" TextWrapping="Wrap" Text="Контактное лицо" VerticalAlignment="Top" Height="28" Width="232" FontSize="20" Foreground="White"/>
+            <TextBox  x:Name="ClientNameTextBox" HorizontalAlignment="Left" Margin="641,131,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="316" Height="28"  FontSize="20"/>
+            <TextBlock HorizontalAlignment="Left" Margin="642,178,0,0" TextWrapping="Wrap" Text="Телефон" VerticalAlignment="Top"  FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+            <TextBox  x:Name="ContactInfoTextBox" HorizontalAlignment="Left" Margin="640,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317"  FontSize="20"/>
+            <TextBlock HorizontalAlignment="Left" Margin="145,103,0,0" TextWrapping="Wrap" Text="Название организации" VerticalAlignment="Top" Height="28" Width="239" FontSize="20" Foreground="White"/>
+            <TextBox x:Name="CustomerNameTextBox" HorizontalAlignment="Left" Margin="145,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" Height="28" FontSize="20"/>
+
+
+            <!-- Электронная почта -->
+            <TextBlock HorizontalAlignment="Left" Margin="642,347,0,0" TextWrapping="Wrap" Text="Электронная почта" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+            <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Margin="640,384,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" FontSize="20"/>
+
+            <!-- Адрес -->
+            <TextBlock HorizontalAlignment="Left" Margin="150,255,0,0" TextWrapping="Wrap" Text="Адрес" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" Width="62" />
+            <TextBox x:Name="CityTextBox" HorizontalAlignment="Left" Margin="146,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="299" FontSize="15"/>
+
+            <!-- Расчетный счет -->
+            <TextBlock HorizontalAlignment="Left" Margin="145,178,0,0" TextWrapping="Wrap" Text="Расчетный счет" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+            <TextBox x:Name="AccountTextBox" HorizontalAlignment="Left" Margin="145,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" FontSize="20"/>
+
+            <!-- Банк -->
+            <TextBlock HorizontalAlignment="Left" Margin="642,255,0,0" TextWrapping="Wrap" Text="Банк" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+
+            <Button  Content="Добавить заказчика" Click="AddClientsButton_Click" HorizontalAlignment="Left" Margin="440,519,0,0" VerticalAlignment="Top" Height="60" Width="290"  FontSize="20" Foreground="White" Background="Red"/>
+            <ComboBox Name="cmbBank" HorizontalAlignment="Left" Margin="642,289,0,0" VerticalAlignment="Top" Width="317" Height="28" FontSize="15" RenderTransformOrigin="0.515,5.51"/>
+            <TextBlock HorizontalAlignment="Left" Margin="146,287,0,328" TextWrapping="Wrap" Text="Город" Foreground="White"  FontSize="15" Width="70"/>
+            <TextBlock HorizontalAlignment="Left" Margin="146,333,0,0" TextWrapping="Wrap" Text="Улица" VerticalAlignment="Top" Foreground="White"  FontSize="15" RenderTransformOrigin="0.795,0.977"/>
+            <TextBlock HorizontalAlignment="Left" Margin="146,388,0,0" TextWrapping="Wrap" Text="Дом" VerticalAlignment="Top" Foreground="White" FontSize="15"/>
+            <TextBox x:Name="StreetTextBox" HorizontalAlignment="Left" Margin="146,358,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" FontSize="15"/>
+            <TextBox x:Name="HouseNumberTextBox" HorizontalAlignment="Left" Margin="146,413,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" FontSize="15"/>
+
+
+
+
+        </Grid>
+        <Grid x:Name="editGrid" Grid.Row="1"  Background="#0d0d0d" Opacity="0.9" Margin="236,157,237,0" Visibility="Collapsed">
+
+
+            <Button Content="Назад" HorizontalAlignment="Right" VerticalAlignment="Top" Height="61" Width="155" Margin="0,28,48,0" Background="Red" Foreground="White" FontSize="20" Click="BackButtonEdit_Click" RenderTransformOrigin="0.573,1.011"/>
+            <TextBlock HorizontalAlignment="Left" Margin="641,128,0,0" TextWrapping="Wrap" Text="Контактное лицо" VerticalAlignment="Top" Height="28" Width="232" FontSize="20" Foreground="White"/>
+            <TextBox  x:Name="newClientNameTextBox_Edit" HorizontalAlignment="Left" Margin="641,164,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="316" Height="28"  FontSize="20"/>
+            <TextBlock HorizontalAlignment="Left" Margin="642,208,0,0" TextWrapping="Wrap" Text="Телефон" VerticalAlignment="Top"  FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+            <TextBox  x:Name="newContactInfoTextBox_Edit" HorizontalAlignment="Left" Margin="642,239,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317"  FontSize="20"/>
+            <TextBlock HorizontalAlignment="Left" Margin="155,128,0,0" TextWrapping="Wrap" Text="Название организации" VerticalAlignment="Top" Height="28" Width="239" FontSize="20" Foreground="White"/>
+            <TextBox x:Name="newCustomerNameTextBox_Edit" HorizontalAlignment="Left" Margin="155,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" Height="28" FontSize="20"/>
+
+
+            <!-- Электронная почта -->
+            <TextBlock HorizontalAlignment="Left" Margin="642,364,0,0" TextWrapping="Wrap" Text="Электронная почта" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+            <TextBox x:Name="newEmailTextBox_Edit" HorizontalAlignment="Left" Margin="642,396,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" FontSize="20"/>
+
+            <!-- Адрес -->
+            <TextBlock HorizontalAlignment="Left" Margin="155,286,0,0" TextWrapping="Wrap" Text="Адрес" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+            <TextBox x:Name="CityTextBox_Edit" HorizontalAlignment="Left" Margin="155,355,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" FontSize="15"/>
+
+            <!-- Расчетный счет -->
+            <TextBlock HorizontalAlignment="Left" Margin="155,203,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Расчетный счет" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+            <TextBox x:Name="newAccountTextBox_Edit" HorizontalAlignment="Left" Margin="155,239,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" FontSize="20"/>
+
+            <!-- Банк -->
+            <TextBlock HorizontalAlignment="Left" Margin="642,286,0,0" TextWrapping="Wrap" Text="Банк" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White" />
+            <ComboBox Name="newCmbBank" HorizontalAlignment="Left" Margin="641,318,0,0" VerticalAlignment="Top" Width="317" FontSize="20"/>
+            <Button  Content="Обновить закачика" Click="ApplyChangesClientsButton_Click" HorizontalAlignment="Center" Margin="0,523,0,0" VerticalAlignment="Top" Height="50" Width="290"  FontSize="20" Foreground="White" Background="Red"/>
+            <TextBlock HorizontalAlignment="Left" Margin="155,334,0,0" TextWrapping="Wrap" Text="Город" VerticalAlignment="Top" FontSize="15" Foreground="White"/>
+            <TextBlock HorizontalAlignment="Left" Margin="155,387,0,0" TextWrapping="Wrap" Text="Улица" VerticalAlignment="Top"  FontSize="15" Foreground="White"/>
+            <TextBox x:Name="StreetTextBox_Edit" HorizontalAlignment="Left" Margin="155,407,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" FontSize="15" />
+            <TextBlock HorizontalAlignment="Left" Margin="155,434,0,0" TextWrapping="Wrap" Text="Дом" VerticalAlignment="Top"  FontSize="15" Foreground="White"/>
+            <TextBox x:Name="HouseNumberTextBox_Edit" HorizontalAlignment="Left" Margin="154,459,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="131"  FontSize="15" />
+
+
+
+
+
+        </Grid>
+
+
+    </Grid>
+</Window>

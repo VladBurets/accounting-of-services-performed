@@ -1,0 +1,144 @@
+﻿<Window x:Class="BdKursach.OrdersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BdKursach"
+        mc:Ignorable="d"
+        Title="Заказы" Height="800" Width="1600" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="/Images/glavn.jpg" Stretch="UniformToFill" Margin="0,0,10,0" Grid.RowSpan="2"  >
+            <Image.Effect>
+                <BlurEffect Radius="5"></BlurEffect>
+            </Image.Effect>
+        </Image>
+        <Menu Grid.Row="0">
+            <Menu Grid.Row="0">
+                <MenuItem Header="Таблицы" FontSize="15">
+                    <MenuItem Header="Заказчики" Click="ClientsMenuItem_Click" FontSize="15"/>
+                    <MenuItem Header="Сотрудники" Click="EmployeesMenuItem_Click" FontSize="15"/>
+                  
+                    <MenuItem Header="Услуги" Click="ServicesMenuItem_Click" FontSize="15"/>
+                    <MenuItem Header="Заказы" Click="OrdersMenuItem_Click" FontSize="15"/>
+                </MenuItem>
+                <MenuItem Header="Статистика" FontSize="15">
+                    <MenuItem Header="Статистика за все время" Click="ServiceStatisticsMenuItem_Click" FontSize="15"/>
+                    <MenuItem Header="Статистика за период времени" Click="PeriodSelectionMenuItem_Click" FontSize="15"/>
+                </MenuItem>
+            </Menu>
+        </Menu>
+
+
+        <Grid x:Name="ElementsGrid" Grid.Row="1" Opacity="0.9" Margin="128,103,128,0" Background="#0d0d0d" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="38"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DataGrid x:Name="OrdersDataGrid" Margin="255,135,89,173" Background="#77FFFFFF" BorderBrush="Black" FontSize="13" Grid.Row="5" HorizontalScrollBarVisibility="Disabled" CanUserAddRows="False">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseLeftButtonUp" Handler="OrdersDataGridRow_MouseLeftButtonUp"/>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер заказа" Binding="{Binding Название_заказа}" Width="120">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Процент выполнения" Binding="{Binding Процент_выполнения}" Width="150"/>
+                    <DataGridTextColumn Header="Стоимость" Binding="{Binding Стоимость}" Width="80"/>
+                    <DataGridTextColumn Header="Дата принятия заказа" Binding="{Binding Дата_принятия_заказа,  StringFormat=d}" Width="150"/>
+                    <DataGridTextColumn Header="Планированная дата завершения " Binding="{Binding Дата_завершения_заказа, StringFormat=d}" Width="160"/>
+                    <DataGridTextColumn Header="Название организации" Binding="{Binding Название}" Width="150">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Сотрудник" Binding="{Binding Сотрудник}" Width="150">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Content="Добавить" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="5" VerticalAlignment="Top" Height="32" Width="129" Click="AddOrderMenuItem_Click" RenderTransformOrigin="4.933,4.904" Background="Red" Foreground="White" FontSize="15" />
+            <Button Content="Редактировать" HorizontalAlignment="Left" Margin="156,10,0,0" Grid.Row="5" VerticalAlignment="Top" Height="32" Width="128" Click="EditOrderMenuItem_Click" Background="Red" Foreground="White" FontSize="15"/>
+            <Button Content="Сотавть тз" HorizontalAlignment="Center" Margin="0,428,0,0" Grid.Row="5" VerticalAlignment="Top" Height="32" Width="128" Background="Red" FontSize="15" Foreground="White" Click="ComposForOrderButton_Click"/>
+            <Button Content="Составить акт" HorizontalAlignment="Left" Margin="787,428,0,0" Grid.Row="5" VerticalAlignment="Top" Height="32" Width="129" Background="Red" FontSize="15" Foreground="White" Click="СertificateOfPerformedServicesButton_Click"/>
+
+            <Button Content="Поиск" HorizontalAlignment="Left" Margin="255,64,0,0" Grid.Row="5" VerticalAlignment="Top" Click="SearchButton_Click"  Height="32" Width="128" Background="Red" FontSize="15" Foreground="White"/>
+            <TextBox  x:Name="SearchTextBox" HorizontalAlignment="Left" Margin="383,64,0,0" Grid.Row="5" TextWrapping="Wrap"  VerticalAlignment="Top" Height="32" Width="683" FontSize="15"/>
+            <Button Content="Очистить поиск" HorizontalAlignment="Left" Margin="1066,64,0,0" Grid.Row="5" VerticalAlignment="Top" Click="ClearButton_Clickk" Height="32" Width="128" Background="Red" FontSize="15" Foreground="White"/>
+            <Button x:Name="ResetFiltersButton" Content="Сбросить фильтр" Click="ResetSortButton_Click" HorizontalAlignment="Left" Margin="31,312,0,0" Grid.Row="5" VerticalAlignment="Top" Foreground="White" FontSize="15" Background="red"  Height="32" Width="150"/>
+            <ComboBox Name="SortFieldComboBox" SelectionChanged="SortFieldComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="31,160,0,0" Grid.Row="5" VerticalAlignment="Top"   Width="172" FontSize="15">
+                <ComboBoxItem Content="По дате"/>
+                <ComboBoxItem Content="По стоимости"/>
+                <ComboBoxItem Content="По проценту выполнения"/>
+            </ComboBox>
+            <TextBlock HorizontalAlignment="Left" Margin="31,135,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Выберите поле для сотрировки" VerticalAlignment="Top"  Foreground="White" FontSize="15"/>
+            <ComboBox Name="SortDirectionComboBox" SelectionChanged="SortDirectionComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="31,230,0,0" Grid.Row="5" VerticalAlignment="Top" Width="172" FontSize="15">
+                <ComboBoxItem Content="По возрастанию"/>
+                <ComboBoxItem Content="По убыванию"/>
+
+            </ComboBox>
+
+            <TextBlock HorizontalAlignment="Left" Margin="31,205,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Сортировка по +/-" VerticalAlignment="Top" FontSize="15" Foreground="White" Width="224"/>
+        </Grid>
+        <TextBlock Text="Заказы" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="706,29,0,0" FontSize="27" FontWeight="Bold" Foreground="Black" />
+        <Grid x:Name="inputGrid" Grid.Row="1" Opacity="0.9" Margin="186,53,249,0" Background="#0d0d0d"   Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Content="Назад" HorizontalAlignment="Right" VerticalAlignment="Top" Height="61" Width="155" Margin="0,10,102,0" Background="Red" Foreground="White" FontSize="20" Click="BackButton_Click" RenderTransformOrigin="0.573,1.011" Grid.Row="1"/>
+            <TextBlock HorizontalAlignment="Left" Margin="209,128,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Заказчик" VerticalAlignment="Top" FontSize="20" Foreground="White" RenderTransformOrigin="0.5,0.5" Height="33" Width="107"/>
+            <ComboBox Name="cmbClient" HorizontalAlignment="Left" Margin="204,179,0,0" Grid.Row="5" VerticalAlignment="Top" Width="380" FontSize="15" RenderTransformOrigin="0.434,0.652"/>
+            <TextBlock HorizontalAlignment="Left" Margin="204,234,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Сотрудник" VerticalAlignment="Top" Width="120" FontSize="20" Foreground="White"/>
+            <ComboBox Name="cmbEmploye" HorizontalAlignment="Left" Margin="202,0,0,0" Grid.Row="5" VerticalAlignment="Center" Width="380" FontSize="15" />
+            <TextBlock HorizontalAlignment="Left" Margin="202,349,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Планированная дата завершения" VerticalAlignment="Top" FontSize="20" Foreground="White"/>
+            <DatePicker Name="DatePickerCompletion" HorizontalAlignment="Left" Margin="202,402,0,0" Grid.Row="5" VerticalAlignment="Top" FontSize="15" Width="245"/>
+            <Button Content="Добавить заказ" HorizontalAlignment="Left" Margin="539,489,0,0" Grid.Row="5" VerticalAlignment="Top"  Click="AddOrderButton_Click" FontSize="20" Background="Red" Foreground="White" Height="52" Width="176"/>
+            <TextBlock HorizontalAlignment="Left" Margin="202,43,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Номер заказа" VerticalAlignment="Top" FontSize="20" Foreground="White"/>
+            <TextBox Name="OrderNameTextBox" HorizontalAlignment="Left" Margin="202,76,0,0" Grid.Row="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="380" FontSize="15"/>
+        </Grid>
+
+        <Grid x:Name="editGrid" Grid.Row="1" Opacity="0.9" Margin="358,143,358,10" Background="#0d0d0d" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Content="Назад"  Background="Red" Foreground="White" FontSize="20" Click="BackButtonEdit_Click"  Grid.Row="5" Margin="718,29,10,476"/>
+            <Button Content="Обновить" HorizontalAlignment="Center" Margin="0,472,0,0" Grid.Row="5" VerticalAlignment="Top"  Click="ApplyChangesButton_Click" FontSize="20" Background="Red" Foreground="White" Height="52" Width="176"/>
+            <TextBlock HorizontalAlignment="Left" Margin="150,107,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Новый номер заказа" VerticalAlignment="Top" Foreground="White" FontSize="15"/>
+            <TextBox x:Name="NewOrderNameTextBox" HorizontalAlignment="Left" Margin="150,146,0,0" Grid.Row="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" FontSize="15"/>
+            <TextBlock HorizontalAlignment="Left" Margin="150,307,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Измененная планированная дата завершения" VerticalAlignment="Top" FontSize="15" Foreground="White"/>
+            <DatePicker Name="NewDateCompletionPicker" HorizontalAlignment="Left" Margin="150,345,0,0" Grid.Row="5" VerticalAlignment="Top" FontSize="15" Width="188"/>
+            <TextBlock HorizontalAlignment="Left" Margin="150,214,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Новый сотрудник" VerticalAlignment="Top" FontSize="15" Foreground="White"/>
+            <ComboBox Name="newEmployeeComboBox" HorizontalAlignment="Left" Margin="150,257,0,0" Grid.Row="5" VerticalAlignment="Top" Width="193" FontSize="15"/>
+        </Grid>
+    </Grid>
+</Window>

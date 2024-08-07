@@ -1,0 +1,109 @@
+﻿<Window x:Class="BdKursach.EmployeesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BdKursach"
+        mc:Ignorable="d"
+        Title="Сотрудники"  Height="800" Width="1600" WindowState="Maximized">
+    <Grid Margin="0,0,0,-16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="/Images/glavn.jpg" Stretch="UniformToFill" Margin="10,0,0,0" Grid.RowSpan="2"  >
+            <Image.Effect>
+                <BlurEffect Radius="5"></BlurEffect>
+            </Image.Effect>
+        </Image>
+        <Menu Grid.Row="0">
+            <Menu Grid.Row="0">
+                <MenuItem Header="Таблицы" FontSize="15">
+                    <MenuItem Header="Заказчики" Click="ClientsMenuItem_Click" FontSize="15"/>
+                    <MenuItem Header="Сотрудники" Click="EmployeesMenuItem_Click" FontSize="15"/>
+
+                    <MenuItem Header="Услуги" Click="ServicesMenuItem_Click" FontSize="15"/>
+                    <MenuItem Header="Заказы" Click="OrdersMenuItem_Click" FontSize="15"/>
+                </MenuItem>
+
+            </Menu>
+        </Menu>
+        <Grid x:Name="ElementGrid" Grid.Row="1"   HorizontalAlignment="Center"  Opacity="0.9" Width="1320" Margin="0,74,0,10"  Background="#0d0d0d" >
+            <DataGrid x:Name="EmployeesDataGrid" Background="#77FFFFFF" BorderBrush="Black" Margin="288,158,278,34" Height="500" FontSize="15" CanUserAddRows="False" HorizontalScrollBarVisibility="Disabled">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseLeftButtonUp" Handler="EmployeDataGridRow_MouseLeftButtonUp"/>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ФИО" Binding="{Binding ФИО}" Width="350">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Должность" Binding="{Binding Должность}" Width="250"/>
+                    <DataGridTextColumn Header="Стаж" Binding="{Binding Стаж}" Width="150"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Добавить" HorizontalAlignment="Left" Margin="48,41,0,0" VerticalAlignment="Top"  Height="32" Width="128" Click="AddMenuItem_Click" RenderTransformOrigin="0.417,0.457" Background="Red" Foreground="White" FontSize="15" />
+            <Button Content="Редактировать" HorizontalAlignment="Left" Margin="202,41,0,0" VerticalAlignment="Top" Height="32" Width="128" Click="EditMenuItem_Click" Background="Red" Foreground="White" FontSize="15"/>
+            <Button Content="Поиск" HorizontalAlignment="Left" Margin="246,104,0,0" VerticalAlignment="Top" Click="SearchButton_Click" Height="32" Width="128" FontSize="15" Background="red" Foreground="White" RenderTransformOrigin="0.414,1.54"/>
+            <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" Margin="374,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="579" FontSize="15"/>
+            <Button Content="Очистить поиск" HorizontalAlignment="Left" Margin="953,104,0,0" VerticalAlignment="Top" Click="ClearButton_Click" Height="32" Width="128" FontSize="15" Background="red" Foreground="White" RenderTransformOrigin="0.531,1.184"/>
+        </Grid>
+        <TextBlock Grid.Row="1" Text="Сотрудники" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,33,0,0" FontSize="27" FontWeight="Bold" Foreground="White"/>
+        <Grid x:Name="inputGrid" Grid.Row="1" Opacity="0.9"  Margin="250,173,282,10"  Background="#0d0d0d" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Content="Назад" Height="61" Width="155" Margin="661,28,99,0" Background="Red" Foreground="White" FontSize="20" Click="BackButton_Click" RenderTransformOrigin="0.573,1.011"/>
+            <TextBlock HorizontalAlignment="Left" Margin="84,10,0,0" TextWrapping="Wrap" Text="ФИО" VerticalAlignment="Top" Height="28" Width="73" FontSize="20" Grid.Row="3" Foreground="White"/>
+            <TextBox  x:Name="EmployeeNameTextBox" HorizontalAlignment="Left" Margin="84,38,0,0" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="365" Height="28"  FontSize="20"/>
+            <TextBlock HorizontalAlignment="Left" Margin="84,75,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Должность" VerticalAlignment="Top"  FontSize="20" RenderTransformOrigin="0.646,3.95" Foreground="White"/>
+
+            <TextBlock HorizontalAlignment="Left" Margin="84,148,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Стаж" VerticalAlignment="Top"  FontSize="20" RenderTransformOrigin="0.468,-1.448" Foreground="White"/>
+            <TextBox x:Name="ExperienceTextBox" HorizontalAlignment="Left" Margin="84,180,0,0" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="365"  FontSize="20" Height="29"/>
+
+
+            <Button  Content="Добавить сотрудника" Click="AddEmployeesButton_Click" HorizontalAlignment="Left" Margin="289,362,0,0" Grid.Row="3" VerticalAlignment="Top" Height="50" Width="289"  FontSize="20" Background="Red" Foreground="White"/>
+            <ComboBox Name="cmbJobTitle" HorizontalAlignment="Left" Margin="84,107,0,0" Grid.Row="3" VerticalAlignment="Top" Width="365" FontSize="20">
+                <ComboBoxItem>Исполнитель</ComboBoxItem>
+                <ComboBoxItem>Тестировщик</ComboBoxItem>
+            </ComboBox>
+
+        </Grid>
+
+
+
+        <Grid x:Name="editGrid" Grid.Row="1"  Margin="345,146,340,10"  Background="#0d0d0d" Opacity="0.9"  Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button Content="Назад" HorizontalAlignment="Right" VerticalAlignment="Top" Height="61" Width="155" Margin="0,28,10,0" Background="Red" Foreground="White" FontSize="20" Click="BackButtonEdit_Click" RenderTransformOrigin="0.573,1.011"/>
+            <TextBlock HorizontalAlignment="Left" Margin="84,10,0,0" TextWrapping="Wrap" Text="Новое ФИО" VerticalAlignment="Top" Height="28" Width="120" Foreground="White" FontSize="20" Grid.Row="3"/>
+            <TextBox  x:Name="newEmployeeNameTextBox_Edit" HorizontalAlignment="Left" Margin="84,38,0,0" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="374" Height="28"  FontSize="20"/>
+            <TextBlock HorizontalAlignment="Left" Margin="84,93,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Новая должность" VerticalAlignment="Top" Foreground="White" FontSize="20" RenderTransformOrigin="0.646,3.95"  />
+
+            <TextBlock HorizontalAlignment="Left" Margin="84,175,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Новый стаж" VerticalAlignment="Top" Foreground="White" FontSize="20" RenderTransformOrigin="0.468,-1.448"/>
+            <TextBox x:Name="newExperienceTextBox_Edit" HorizontalAlignment="Left" Margin="84,207,0,0" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="374"  FontSize="20"/>
+
+            <Button  Content="Применить изменения" Click="ApplyChangesButton_Click" HorizontalAlignment="Left" Margin="289,404,0,0" Grid.Row="3" VerticalAlignment="Top" Height="50" Width="289" Foreground="White" FontSize="20" Background="Red"/>
+            <ComboBox Name="cmbNewJobTitle" HorizontalAlignment="Left" Margin="84,125,0,0" Grid.Row="3" VerticalAlignment="Top" Width="365" FontSize="20">
+                <ComboBoxItem>Исполнитель</ComboBoxItem>
+                <ComboBoxItem>Тестировщик</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+
+
+    </Grid>
+</Window>

@@ -1,0 +1,27 @@
+﻿<Window x:Class="BdKursach.Pages.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BdKursach.Pages"
+        mc:Ignorable="d"
+        Title="Авторизация" WindowState="Maximized">
+    <Grid>
+        <Image Source="/Images/glavn.jpg" Stretch="UniformToFill"  >
+            <Image.Effect>
+                <BlurEffect Radius="5"></BlurEffect>
+            </Image.Effect>
+        </Image>
+        <Image Source="/Images/Netflix_2015_logo.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="140" Width="280" Margin="112,29,0,0" />
+        
+        <Grid Background="#0d0d0d" Margin="486,157,486,0" Opacity="0.9">
+            <Label Foreground="White" FontSize="30" Content="Войти" FontWeight="Bold" HorizontalAlignment="Left" Margin="86,68,0,0" VerticalAlignment="Top"/>
+            <TextBox CaretBrush="White" x:Name="LoginTextBox" Foreground="white" FontSize="20" Background="gray" HorizontalAlignment="Left" Margin="92,165,0,0" VerticalAlignment="Top" Width="307"/>
+            <Label  Foreground="White" FontSize="20" Content="Логин"  HorizontalAlignment="Left" Margin="86,123,0,0" VerticalAlignment="Top"/>
+            <PasswordBox CaretBrush="White"  Name="PasswordTextBox" Foreground="white" FontSize="20" Background="gray" HorizontalAlignment="Left" Margin="92,236,0,0"  VerticalAlignment="Top" Width="307"/>
+            <Label  Foreground="White" FontSize="20" Content="Пароль"  HorizontalAlignment="Left" Margin="86,194,0,0" VerticalAlignment="Top"/>
+            <Button FontSize="26" Content="Войти" HorizontalAlignment="Left" Margin="92,316,0,0" VerticalAlignment="Top" Background="red" Foreground="White" Padding="10" Width="307" Click="ComeButton_Click"/>
+            
+        </Grid>
+    </Grid>
+</Window>

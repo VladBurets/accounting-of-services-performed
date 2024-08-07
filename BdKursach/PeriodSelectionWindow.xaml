@@ -1,0 +1,31 @@
+﻿<Window x:Class="BdKursach.PeriodSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BdKursach"
+        mc:Ignorable="d"
+        Title="PeriodSelectionWindow" Height="237" Width="245">
+    <Grid Margin="0,0,0,-6">
+
+
+        <TextBlock HorizontalAlignment="Left" Margin="14,79,0,0" TextWrapping="Wrap" Text="Месяц" VerticalAlignment="Top" Width="141"/>
+        <TextBlock HorizontalAlignment="Left" Margin="14,31,0,0" TextWrapping="Wrap" Text="Год" VerticalAlignment="Top" Width="190"/>
+        <ComboBox x:Name="YearComboBox" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="MonthComboBox" HorizontalAlignment="Left" Margin="14,100,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="Январь" Tag="1"/>
+            <ComboBoxItem Content="Февраль" Tag="2"/>
+            <ComboBoxItem Content="Март" Tag="3"/>
+            <ComboBoxItem Content="Апрель" Tag="4"/>
+            <ComboBoxItem Content="Май" Tag="5"/>
+            <ComboBoxItem Content="Июнь" Tag="6"/>
+            <ComboBoxItem Content="Июль" Tag="7"/>
+            <ComboBoxItem Content="Август" Tag="8"/>
+            <ComboBoxItem Content="Сентябрь" Tag="9"/>
+            <ComboBoxItem Content="Октябрь" Tag="10"/>
+            <ComboBoxItem Content="Ноябрь" Tag="11"/>
+            <ComboBoxItem Content="Декабрь" Tag="12"/>
+        </ComboBox>
+        <Button Content="Построить график" Click="SelectButton_Click" HorizontalAlignment="Left" Margin="70,148,0,0" VerticalAlignment="Top" Height="40" Width="116"/>
+    </Grid>
+</Window>
